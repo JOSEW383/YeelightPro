@@ -3,6 +3,12 @@
 import socket
 from time import sleep
 
+#List of light bulb
+bulb1 = "192.168.4.234"
+bulb2 = "192.168.4.234"
+bulb3 = "192.168.4.234"
+bulb4 = "192.168.4.234"
+
 def operate_on_bulb(ip, method, params):
   port=55443
   try:
@@ -47,14 +53,14 @@ def turn_off(ip):
 #MAIN DEL PROGRAMA DE LA BOMBILLA
 print "Welcome to YeelightPro"
 
-turn_on('192.168.4.234')
+turn_on(bulb1)
 #white 16777215 blue 255 green 65280 red 16711680 pink 16711935 yellow 16776960 turquoise 65535
-set_rgb('192.168.4.234', 16777215)
+set_rgb(bulb1, 16777215)
 
 for i in range(500):
-    set_bright('192.168.4.234', 1)
+    set_bright(bulb1, 1)
     sleep(0.5)
-    set_bright('192.168.4.234', 100)
+    set_bright(bulb1, 100)
     sleep(0.5)
 
 #input("Press ENTER to continue") #For view log
