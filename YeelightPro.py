@@ -7,11 +7,10 @@ def operate_on_bulb(ip, method, params):
   port=55443
   try:
     tcp_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    print "Conectando con ",ip, port ,"..."
+    print "Send to ",ip, port ,"..."
     tcp_socket.connect((ip, int(port)))
 
     msg2="{\"id\": 192.168.4.234, \"method\": \"set_rgb\", \"params\":[\"65280\", \"sudden\", 500]}\r\n"
-    msg3="{\"id\": 192.168.4.234, \"method\": \"set_power\", \"params\":[\"off\", \"sudden\", 500]}\r\n"
 
     msg="{\"id\":" + str(ip) + ",\"method\":\""
     msg += method + "\",\"params\":[" + params + "]}\r\n"
@@ -19,7 +18,7 @@ def operate_on_bulb(ip, method, params):
     tcp_socket.send(msg)
     tcp_socket.close()
   except Exception as e:
-    print "Ha habido un error:", e
+    print "An error has ocurred:", e
 
 
 def set_rgb(ip, color):
@@ -37,27 +36,23 @@ def toggle(ip):
     operate_on_bulb(ip,"toggle","")
 
 def turn_on(ip):
-    params=["off","sudden",500]
+    params="\"on\",\"sudden\",500"
     operate_on_bulb(ip,"set_power",params)
 
 def turn_off(ip):
-    params=["off", "sudden", 500]
+    params="\"off\",\"sudden\",500"
     operate_on_bulb(ip,"set_power",params)
 
 #MAIN DEL PROGRAMA DE LA BOMBILLA
-print "Biemvenido al programa de YEELIGHT"
+print "Welcome to YeelightPro"
 
-turn_off('192.168.4.234')
+turn_on('192.168.4.234')
 set_rgb('192.168.4.234', 16777215)
 
-set_bright('192.168.4.234', 100)
-sleep(0.5)
-set_bright('192.168.4.234', 1)
-sleep(0.5)
-set_bright('192.168.4.234', 100)
-sleep(0.5)
-set_bright('192.168.4.234', 1)
-sleep(0.5)
-set_bright('192.168.4.234', 100)
+for i in range(5):
+    set_bright('192.168.4.234', 1)
+    sleep(0.5)
+    set_bright('192.168.4.234', 100)
+    sleep(0.5)
 
-#input("Pressione ENTER para continuar") #For view log
+#input("Press ENTER to continue") #For view log
