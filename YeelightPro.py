@@ -25,7 +25,8 @@ def set_rgb(ip, color):
     operate_on_bulb(ip, "set_rgb", str(color))
 
 def set_bright(ip, bright):
-    operate_on_bulb(ip, "set_bright", str(bright))
+    params=",\"smooth\",500"
+    operate_on_bulb(ip, "set_bright", str(bright)+params)
     #effect (str)  The type of effect. Can be "smooth" or "sudden".
 
 def set_color_temp(ip):
@@ -47,9 +48,10 @@ def turn_off(ip):
 print "Welcome to YeelightPro"
 
 turn_on('192.168.4.234')
+#white 16777215 blue 255 green 65280 red 16711680 pink 16711935 yellow 16776960 turquoise 65535
 set_rgb('192.168.4.234', 16777215)
 
-for i in range(5):
+for i in range(500):
     set_bright('192.168.4.234', 1)
     sleep(0.5)
     set_bright('192.168.4.234', 100)
