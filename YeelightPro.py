@@ -36,15 +36,17 @@ def toggle(ip):
     operate_on_bulb(ip,"toggle","")
 
 def turn_on(ip):
-    operate_on_bulb(ip,"turn_on","")
+    params=["off","sudden","500"]
+    operate_on_bulb(ip,"set_power",params)
 
 def turn_off(ip):
-    operate_on_bulb(ip,"turn_off","")
+    params=["off","sudden","500"]
+    operate_on_bulb(ip,"set_power",params)
 
 #MAIN DEL PROGRAMA DE LA BOMBILLA
 print "Biemvenido al programa de YEELIGHT"
 
-turn_on('192.168.4.234')
+turn_off('192.168.4.234')
 set_rgb('192.168.4.234', 16777215)
 
 set_bright('192.168.4.234', 100)
