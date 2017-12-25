@@ -4,7 +4,7 @@ import socket
 from time import sleep
 
 #-------------------------------------------------------------------------
-#List of light bulb
+#List of light bulbs
 bulb1 = "192.168.4.230"
 bulb2 = "192.168.4.252"
 bulb3 = "192.168.4.85"
@@ -37,9 +37,10 @@ def set_rgb(ip, color):
     operate_on_bulb(ip, "set_rgb", str(color)+params)
 
 def set_bright(ip, bright):
-    params=",\"smooth\",500"
+    params=",\"sudden\",500"
     operate_on_bulb(ip, "set_bright", str(bright)+params)
     #effect (str)  The type of effect. Can be "smooth" or "sudden".
+    #Minimun of bright is 1!!
 
 def set_color_temp(ip):
     operate_on_bulb(ip,"set_color_temp","")
@@ -57,7 +58,7 @@ def turn_off(ip):
     operate_on_bulb(ip,"set_power",params)
 
 #-------------------------------------------------------------------------
-#Voids witch all light bombs
+#Voids witch all light bulbs
 
 def turn_on_all():
     turn_on(bulb1)
@@ -94,8 +95,17 @@ def test2():
         set_rgb(bulb4, colors[(i+3)%6])
         sleep(1)
 
+def test3():
+    turn_on_all()
+    bulbs=[bulb1,bulb2,bulb3,bulb4]
+    for i in range(3):
+        set_bright(bulbs[i],1)
+    for i in range(500):
+        set_bright(bulbs[i%4],1)
+        set_bright(bulbs[(i+1)%4],100)
+        sleep(0.5)
 
 #-------------------------------------------------------------------------
 #MAIN OF YEELIGHTPRO
 print "Welcome to YeelightPro"
-test2()
+test3()
