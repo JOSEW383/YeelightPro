@@ -3,11 +3,15 @@
 import socket
 from time import sleep
 
+#-------------------------------------------------------------------------
 #List of light bulb
 bulb1 = "192.168.4.230"
 bulb2 = "192.168.4.252"
 bulb3 = "192.168.4.85"
 bulb4 = "192.168.4.234"
+
+#-------------------------------------------------------------------------
+#Method of yeelight
 
 def operate_on_bulb(ip, method, params):
   port=55443
@@ -53,22 +57,39 @@ def turn_off(ip):
     operate_on_bulb(ip,"set_power",params)
 
 #-------------------------------------------------------------------------
-def turn_all():
+#Voids witch all light bombs
+
+def turn_on_all():
+    turn_on(bulb1)
+    turn_on(bulb2)
+    turn_on(bulb3)
+    turn_on(bulb4)
+
+def turn_off_all():
     turn_off(bulb1)
     turn_off(bulb2)
     turn_off(bulb3)
-    turn_on(bulb4)
+    turn_off(bulb4)
+
+#-------------------------------------------------------------------------
+#Test
 
 def test1():
+    turn_off_all()
+    turn_on(bulb4)
     set_rgb(bulb4, 16777215)
-    for i in range(500):
+    for i in range(5):
         set_bright(bulb4, 1)
         sleep(0.5)
         set_bright(bulb4, 100)
         sleep(0.5)
 
+def test2():
+    turn_on_all()
+
+
+
 #-------------------------------------------------------------------------
 #MAIN OF YEELIGHTPRO
 print "Welcome to YeelightPro"
-turn_all()
-test1()
+test2()
