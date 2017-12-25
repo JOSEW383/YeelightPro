@@ -101,12 +101,22 @@ def test2():
 def test3():
     turn_on_all()
     bulbs=[bulb1,bulb2,bulb3,bulb4]
+    set_rgb(bulb1,16777215)
+    set_rgb(bulb2,16777215)
+    set_rgb(bulb3,16777215)
+    set_rgb(bulb4,16777215)
     for i in range(4):
         set_bright(bulbs[i],1)
     for i in range(500):
         set_bright(bulbs[i%4],1)
         set_bright(bulbs[(i+1)%4],100)
         sleep(0.5)
+
+def test4():
+    turn_off_all()
+    turn_on(bulb4)
+    set_rgb(bulb4,16777215)
+    set_bright(bulb4,50)
 
 #-------------------------------------------------------------------------
 #MAIN OF YEELIGHTPRO
