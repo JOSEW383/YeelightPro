@@ -33,7 +33,7 @@ def operate_on_bulb(ip, method, params):
 
 def set_rgb(ip, color):
     #white 16777215 blue 255 green 65280 red 16711680 pink 16711935 yellow 16776960 turquoise 65535
-    params=",\"smooth\",500"
+    params=",\"sudden\",500"
     operate_on_bulb(ip, "set_rgb", str(color)+params)
 
 def set_bright(ip, bright):
@@ -86,7 +86,13 @@ def test1():
 
 def test2():
     turn_on_all()
-
+    colors=[255,65280,16711680,16711935,16776960,65535]
+    for i in range(500):
+        set_rgb(bulb1, colors[i%6])
+        set_rgb(bulb2, colors[(i+1)%6])
+        set_rgb(bulb3, colors[(i+2)%6])
+        set_rgb(bulb4, colors[(i+3)%6])
+        sleep(1)
 
 
 #-------------------------------------------------------------------------
