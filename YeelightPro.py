@@ -29,7 +29,8 @@ def operate_on_bulb(ip, method, params):
 
 def set_rgb(ip, color):
     #white 16777215 blue 255 green 65280 red 16711680 pink 16711935 yellow 16776960 turquoise 65535
-    operate_on_bulb(ip, "set_rgb", str(color))
+    params=",\"smooth\",500"
+    operate_on_bulb(ip, "set_rgb", str(color)+params)
 
 def set_bright(ip, bright):
     params=",\"smooth\",500"
