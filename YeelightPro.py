@@ -88,6 +88,9 @@ def test1():
 def test2():
     turn_on_all()
     colors=[255,65280,16711680,16711935,16776960,65535]
+    bulbs=[bulb1,bulb2,bulb3,bulb4]
+    for i in range(3):
+        set_bright(bulbs[i],100)
     for i in range(500):
         set_rgb(bulb1, colors[i%6])
         set_rgb(bulb2, colors[(i+1)%6])
@@ -108,4 +111,4 @@ def test3():
 #-------------------------------------------------------------------------
 #MAIN OF YEELIGHTPRO
 print "Welcome to YeelightPro"
-test3()
+test2()
