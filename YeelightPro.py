@@ -28,6 +28,7 @@ def operate_on_bulb(ip, method, params):
 
 
 def set_rgb(ip, color):
+    #white 16777215 blue 255 green 65280 red 16711680 pink 16711935 yellow 16776960 turquoise 65535
     operate_on_bulb(ip, "set_rgb", str(color))
 
 def set_bright(ip, bright):
@@ -50,17 +51,22 @@ def turn_off(ip):
     params="\"off\",\"sudden\",500"
     operate_on_bulb(ip,"set_power",params)
 
-#MAIN DEL PROGRAMA DE LA BOMBILLA
+#-------------------------------------------------------------------------
+def turn_all():
+    turn_on(bulb1)
+    turn_on(bulb2)
+    turn_on(bulb3)
+    turn_on(bulb4)
+
+def test1():
+    set_rgb(bulb1, 16777215)
+    for i in range(500):
+        set_bright(bulb1, 1)
+        sleep(0.5)
+        set_bright(bulb1, 100)
+        sleep(0.5)
+
+#-------------------------------------------------------------------------
+#MAIN OF YEELIGHTPRO
 print "Welcome to YeelightPro"
-
-turn_on(bulb1)
-#white 16777215 blue 255 green 65280 red 16711680 pink 16711935 yellow 16776960 turquoise 65535
-set_rgb(bulb1, 16777215)
-
-for i in range(500):
-    set_bright(bulb1, 1)
-    sleep(0.5)
-    set_bright(bulb1, 100)
-    sleep(0.5)
-
-#input("Press ENTER to continue") #For view log
+test1()
