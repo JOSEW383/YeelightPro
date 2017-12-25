@@ -4,9 +4,9 @@ import socket
 from time import sleep
 
 #List of light bulb
-bulb1 = "192.168.4.234"
-bulb2 = "192.168.4.234"
-bulb3 = "192.168.4.234"
+bulb1 = "192.168.4.230"
+bulb2 = "192.168.4.252"
+bulb3 = "192.168.4.85"
 bulb4 = "192.168.4.234"
 
 def operate_on_bulb(ip, method, params):
@@ -16,7 +16,7 @@ def operate_on_bulb(ip, method, params):
     print "Send to ",ip, port ,"..."
     tcp_socket.connect((ip, int(port)))
 
-    msg2="{\"id\": 192.168.4.234, \"method\": \"set_rgb\", \"params\":[\"65280\", \"sudden\", 500]}\r\n"
+    #msg2="{\"id\": 192.168.4.234, \"method\": \"set_rgb\", \"params\":[\"65280\", \"sudden\", 500]}\r\n"
 
     msg="{\"id\":" + str(ip) + ",\"method\":\""
     msg += method + "\",\"params\":[" + params + "]}\r\n"
@@ -53,20 +53,21 @@ def turn_off(ip):
 
 #-------------------------------------------------------------------------
 def turn_all():
-    turn_on(bulb1)
-    turn_on(bulb2)
-    turn_on(bulb3)
+    turn_off(bulb1)
+    turn_off(bulb2)
+    turn_off(bulb3)
     turn_on(bulb4)
 
 def test1():
-    set_rgb(bulb1, 16777215)
+    set_rgb(bulb4, 16777215)
     for i in range(500):
-        set_bright(bulb1, 1)
+        set_bright(bulb4, 1)
         sleep(0.5)
-        set_bright(bulb1, 100)
+        set_bright(bulb4, 100)
         sleep(0.5)
 
 #-------------------------------------------------------------------------
 #MAIN OF YEELIGHTPRO
 print "Welcome to YeelightPro"
+turn_all()
 test1()
