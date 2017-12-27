@@ -7,8 +7,8 @@ from time import sleep
 #List of light bulbs
 bulb1 = "192.168.4.230"
 bulb2 = "192.168.4.252"
-bulb3 = "192.168.4.85"
-bulb4 = "192.168.4.234"
+bulb3 = "192.168.4.86"
+bulb4 = "192.168.4.232"
 
 #-------------------------------------------------------------------------
 #Method of yeelight
@@ -115,10 +115,10 @@ def test3():
 def test4():
     turn_off_all()
     turn_on(bulb4)
-    set_rgb(bulb4,16777215)
+    set_rgb(bulb4,9599999)
     set_bright(bulb4,50)
 
 #-------------------------------------------------------------------------
 #MAIN OF YEELIGHTPRO
 print "Welcome to YeelightPro"
-test3()
+test4()
