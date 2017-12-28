@@ -160,7 +160,6 @@ def test5():
 #-------------------------------------------------------------------------
 #MAIN OF YEELIGHTPRO
 print "Welcome to YeelightPro"
-print get_info('192.168.5.110','power')
-print get_info('192.168.5.111','bright')
-print get_info('192.168.5.112','rgb')
+turn_off_all()
+turn_on(bulb4)
 set_rgb(bulb4,white)
