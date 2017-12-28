@@ -3,7 +3,7 @@
 import re
 import socket
 from time import sleep
-
+from ast import literal_eval
 #-------------------------------------------------------------------------
 #List of light bulbs
 bulb1 = "192.168.5.110"
@@ -26,8 +26,9 @@ turquoise=65535
 
 #TO DO
 def get_param_value(data, param):
-    match_pattern = re.split("('.*')|(\".*\")*", data)
-    print match_pattern
+    dictionary = literal_eval(data[0])
+    value = dictionary["result"]
+    return value
 
 #info= power / bright / rgb
 def get_info(ip,info):
@@ -36,7 +37,6 @@ def get_info(ip,info):
 	tcp_socket.connect((ip, int(port)))
 	tcp_socket.send("{\"id\":" + ip + ", \"method\":\"get_prop\", \"params\":[\"power\", \"bright\", \"rgb\"]}\r\n")
 	data = tcp_socket.recvfrom(2048)
-	print data#FOR DEVELOPMENT!!!!!!!!!!!!!!
 	tcp_socket.close()
 
 	if info == "power":
@@ -164,5 +164,8 @@ def test5():
 #-------------------------------------------------------------------------
 #MAIN OF YEELIGHTPRO
 print "Welcome to YeelightPro"
-#print get_info('192.168.5.113','power')
+print get_info('192.168.5.110','power')
+print get_info('192.168.5.111','power')
+print get_info('192.168.5.112','power')
+print get_info('192.168.5.113','power')
 set_rgb(bulb4,white)
