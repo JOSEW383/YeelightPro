@@ -15,13 +15,9 @@ port=55443
 #-------------------------------------------------------------------------
 #Methods of yeelight
 
+#TO DO
 def get_param_value(data, param):
-  param_re = re.compile(param+":\s*([ -~]*)")
-  match = param_re.search(data)
-  value=""
-  if match != None:
-    value = match.group(1)
-    return value
+
 
 #info= power / bright / rgb
 def get_info(ip,info):
