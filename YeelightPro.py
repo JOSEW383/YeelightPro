@@ -16,7 +16,7 @@ port=55443
 #Methods of yeelight
 
 #TO DO
-def get_param_value(data, param):
+#def get_param_value(data, param):
 
 
 #info= power / bright / rgb
