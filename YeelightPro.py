@@ -1,20 +1,51 @@
 #!/usr/bin/python
 
+import re
 import socket
 from time import sleep
 
 #-------------------------------------------------------------------------
 #List of light bulbs
-bulb1 = "192.168.4.230"
-bulb2 = "192.168.4.252"
-bulb3 = "192.168.4.86"
-bulb4 = "192.168.4.232"
+bulb1 = "192.168.5.110"
+bulb2 = "192.168.5.111"
+bulb3 = "192.168.5.112"
+bulb4 = "192.168.5.113"
 
+port=55443
 #-------------------------------------------------------------------------
-#Method of yeelight
+#Methods of yeelight
+
+def get_param_value(data, param):
+  param_re = re.compile(param+":\s*([ -~]*)")
+  match = param_re.search(data)
+  value=""
+  if match != None:
+    value = match.group(1)
+    return value
+
+#info= power / bright / rgb
+def get_info(ip,info):
+	tcp_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+	tcp_socket.settimeout(2)
+	tcp_socket.connect((ip, int(port)))
+	tcp_socket.send("{\"id\":" + ip + ", \"method\":\"get_prop\", \"params\":[\"power\", \"bright\", \"rgb\"]}\r\n")
+	data = tcp_socket.recvfrom(2048)
+	print data#FOR DEVELOPMENT!!!!!!!!!!!!!!
+	tcp_socket.close()
+
+	if info == "power":
+		power = get_param_value(data,"power")
+		return power
+	elif info == "bright":
+		bright = get_param_value(data,'bright')
+		return bright
+	elif info == "rgb":
+		rgb = get_param_value(data,"rgb")
+		return rgb
+	else:
+		return "error"
 
 def operate_on_bulb(ip, method, params):
-	port=55443
 	try:
 		tcp_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 		tcp_socket.settimeout(2)
@@ -121,4 +152,7 @@ def test4():
 #-------------------------------------------------------------------------
 #MAIN OF YEELIGHTPRO
 print "Welcome to YeelightPro"
-test4()
+print get_info('192.168.5.113','power')
+turn_off_all()
+turn_on(bulb4)
+set_rgb(bulb4, 16777215)
