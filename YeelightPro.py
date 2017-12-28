@@ -29,14 +29,11 @@ def get_param_value(data, info):
     dictionary = literal_eval(data[0])
     value = dictionary["result"]
     if info == "power":
-        power = value[0]
-        return power
+        return value[0]
     elif info == "bright":
-        bright = value[1]
-        return bright
+        return value[1]
     elif info == "rgb":
-        rgb = value[2]
-        return rgb
+        return value[2]
     else:
         return "error"
 
@@ -48,7 +45,7 @@ def get_info(ip,info):
     tcp_socket.send("{\"id\":" + ip + ", \"method\":\"get_prop\", \"params\":[\"power\", \"bright\", \"rgb\"]}\r\n")
     data = tcp_socket.recvfrom(2048)
     tcp_socket.close()
-    get_param_value(data,info)
+    return get_param_value(data,info)
 
 def operate_on_bulb(ip, method, params):
 	try:
