@@ -12,12 +12,22 @@ bulb3 = "192.168.5.112"
 bulb4 = "192.168.5.113"
 
 port=55443
+
+#List of colors
+white=16777215
+blue=255
+green=65280
+red=16711680
+pink=16711935
+yellow=16776960
+turquoise=65535
 #-------------------------------------------------------------------------
 #Methods of yeelight
 
 #TO DO
-#def get_param_value(data, param):
-
+def get_param_value(data, param):
+    match_pattern = re.split("('.*')|(\".*\")*", data)
+    print match_pattern
 
 #info= power / bright / rgb
 def get_info(ip,info):
@@ -145,10 +155,14 @@ def test4():
     set_rgb(bulb4,9599999)
     set_bright(bulb4,50)
 
+def test5():
+    turn_off_all()
+    turn_on(bulb3)
+    set_rgb(bulb3,9599999)
+    set_bright(bulb3,20)
+
 #-------------------------------------------------------------------------
 #MAIN OF YEELIGHTPRO
 print "Welcome to YeelightPro"
-print get_info('192.168.5.113','power')
-turn_off_all()
-turn_on(bulb4)
-set_rgb(bulb4, 16777215)
+#print get_info('192.168.5.113','power')
+set_rgb(bulb4,white)
