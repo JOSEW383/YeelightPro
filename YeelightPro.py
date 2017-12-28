@@ -25,31 +25,30 @@ turquoise=65535
 #Methods of yeelight
 
 #TO DO
-def get_param_value(data, param):
+def get_param_value(data, info):
     dictionary = literal_eval(data[0])
     value = dictionary["result"]
-    return value
+    if info == "power":
+        power = value[0]
+        return power
+    elif info == "bright":
+        bright = value[1]
+        return bright
+    elif info == "rgb":
+        rgb = value[2]
+        return rgb
+    else:
+        return "error"
 
 #info= power / bright / rgb
 def get_info(ip,info):
-	tcp_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-	tcp_socket.settimeout(2)
-	tcp_socket.connect((ip, int(port)))
-	tcp_socket.send("{\"id\":" + ip + ", \"method\":\"get_prop\", \"params\":[\"power\", \"bright\", \"rgb\"]}\r\n")
-	data = tcp_socket.recvfrom(2048)
-	tcp_socket.close()
-
-	if info == "power":
-		power = get_param_value(data,"power")
-		return power
-	elif info == "bright":
-		bright = get_param_value(data,'bright')
-		return bright
-	elif info == "rgb":
-		rgb = get_param_value(data,"rgb")
-		return rgb
-	else:
-		return "error"
+    tcp_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    tcp_socket.settimeout(2)
+    tcp_socket.connect((ip, int(port)))
+    tcp_socket.send("{\"id\":" + ip + ", \"method\":\"get_prop\", \"params\":[\"power\", \"bright\", \"rgb\"]}\r\n")
+    data = tcp_socket.recvfrom(2048)
+    tcp_socket.close()
+    get_param_value(data,info)
 
 def operate_on_bulb(ip, method, params):
 	try:
@@ -165,7 +164,6 @@ def test5():
 #MAIN OF YEELIGHTPRO
 print "Welcome to YeelightPro"
 print get_info('192.168.5.110','power')
-print get_info('192.168.5.111','power')
-print get_info('192.168.5.112','power')
-print get_info('192.168.5.113','power')
+print get_info('192.168.5.111','bright')
+print get_info('192.168.5.112','rgb')
 set_rgb(bulb4,white)
