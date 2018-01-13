@@ -8,6 +8,7 @@ bulb1 = "192.168.5.110"
 bulb2 = "192.168.5.111"
 bulb3 = "192.168.5.112"
 bulb4 = "192.168.5.113"
+bulbs=[bulb1,bulb2,bulb3,bulb4]
 
 port=55443
 
@@ -19,6 +20,9 @@ red=16711680
 pink=16711935
 yellow=16776960
 turquoise=65535
+
+colors=[255,65280,16711680,16711935,16776960,65535]
+
 #-------------------------------------------------------------------------
 #Methods of yeelight
 
@@ -91,6 +95,90 @@ def turn_off(ip):
     params="\"off\",\"smooth\",500"
     operate_on_bulb(ip,"set_power",params)
 
+
+#-------------------------------------------------------------------------
+#Other Methods
+
+def change_state():
+    try:
+        data  = open("data.txt", "r")
+    except Exception as e:
+        data  = open("data.txt", "w+")
+        data.write("notOpen")
+        data.close()
+    state = data.readline()
+    data.close()
+    if state == "isOpen":
+        data  = open("data.txt", "w")
+        data.write("notOpen")
+        data.close()
+    else:#isNotOpen
+        data  = open("data.txt", "w")
+        data.write("isOpen")
+        data.close()
+
+def is_open():
+    data  = open("data.txt", "r")
+    state = data.read()
+    data.close()
+    if state == "isOpen":
+        return True
+    else:#isNotOpen
+        data.close()
+        return False
+
+def change_bright():
+    info = get_info(bulb1,"bright")
+    if info == "1":
+        for i in range(4):
+            set_bright(bulbs[i],25)
+    elif info == "25":
+        for i in range(4):
+            set_bright(bulbs[i],50)
+    elif info == "50":
+        for i in range(4):
+            set_bright(bulbs[i],75)
+    elif info == "75":
+        for i in range(4):
+            set_bright(bulbs[i],100)
+    elif info == "100":
+        for i in range(4):
+            set_bright(bulbs[i],1)
+    else:
+        for i in range(4):
+            set_bright(bulbs[i],100)
+
+def change_color():
+    info = get_info(bulb1,"rgb")
+    if info == "16777215":
+        for i in range(4):
+            set_rgb(bulbs[i],255)
+    elif info == "255":
+        for i in range(4):
+            set_rgb(bulbs[i],65280)
+    elif info == "65280":
+        for i in range(4):
+            set_rgb(bulbs[i],16711680)
+    elif info == "16711680":
+        for i in range(4):
+            set_rgb(bulbs[i],16711935)
+    elif info == "16711935":
+        for i in range(4):
+            set_rgb(bulbs[i],16776960)
+    elif info == "16776960":
+        for i in range(4):
+            set_rgb(bulbs[i],65535)
+    else:
+        for i in range(4):
+            set_rgb(bulbs[i],16777215)
+
+def number_bulbs():
+    info = get_info(bulb4,"power")
+    if info == "empty":
+        return 3
+    else:
+        return 4
+
 #-------------------------------------------------------------------------
 #Voids witch all light bulbs
 
@@ -120,17 +208,23 @@ def test1():
         sleep(0.5)
 
 def test2():
+    change_state()
     turn_on_all()
-    colors=[255,65280,16711680,16711935,16776960,65535]
-    bulbs=[bulb1,bulb2,bulb3,bulb4]
-    for i in range(4):
+    nbulbs = number_bulbs()
+    for i in range(nbulbs):
         set_bright(bulbs[i],100)
-    for i in range(500):
-        set_rgb(bulb1, colors[i%6])
-        set_rgb(bulb2, colors[(i+1)%6])
-        set_rgb(bulb3, colors[(i+2)%6])
-        set_rgb(bulb4, colors[(i+3)%6])
-        sleep(1)
+    while not is_open():
+        for i in range(6):
+            set_rgb(bulb1, colors[i%6])
+            set_rgb(bulb2, colors[(i+1)%6])
+            set_rgb(bulb3, colors[(i+2)%6])
+            if nbulbs == 4:
+                set_rgb(bulb4, colors[(i+3)%6])
+            if is_open():
+                break
+            sleep(1)
+    for i in range(nbulbs):
+        set_rgb(bulbs[i],white)
 
 def test3():
     turn_on_all()
@@ -161,6 +255,4 @@ def test5():
 #-------------------------------------------------------------------------
 #MAIN OF YEELIGHTPRO
 print "Welcome to YeelightPro"
-turn_off_all()
-turn_on(bulb4)
-set_rgb(bulb4,white)
+test2()
