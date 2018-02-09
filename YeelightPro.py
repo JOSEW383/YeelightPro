@@ -119,7 +119,6 @@ def change_state(mode):
         data = ["normal","film"]
         change_data(1,state,data)
 
-
 def change_data(line,state,data):
     filee  = open("data.txt", "w")
     for i in range(len(state)):
